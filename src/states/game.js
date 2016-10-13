@@ -1,27 +1,28 @@
+import Utils from '../util/utils';
+
 class Game extends Phaser.State {
 
-  constructor() {
-    super();
-  }
+    constructor() {
+        super();
+    }
 
-  create() {
-    this.game.add.tileSprite(0, 0, 800, 600, 'starfield');
+    create() {
+        Utils.loadBackground(this.game)
+        var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'Game', {
+            font: '42px Arial', fill: '#ffffff', align: 'center'
+        });
+        text.anchor.set(0.5);
 
-    var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'Game', {
-      font: '42px Arial', fill: '#ffffff', align: 'center'
-    });
-    text.anchor.set(0.5);
+        this.input.onDown.add(this.endGame, this);
+    }
 
-    this.input.onDown.add(this.endGame, this);
-  }
+    update() {
 
-  update() {
+    }
 
-  }
-
-  endGame() {
-    this.game.state.start('gameover');
-  }
+    endGame() {
+        this.game.state.start('gameover');
+    }
 
 }
 
