@@ -11,6 +11,7 @@ class Game extends Phaser.State {
   preload() {
     this.addBasicGroups();
     this.addBricks();
+    this.game.add.existing(this.rootGroup);
   }
 
   create() {
@@ -32,16 +33,16 @@ class Game extends Phaser.State {
   }
 
   addBasicGroups() {
-    let rootGroup = this.game.add.group('', Constants.GROUP_ROOT);
-    let uiGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_UI);
-    let bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
-    let playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
-    let ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
+    this.rootGroup = this.game.add.group('', Constants.GROUP_ROOT);
+    this.uiGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_UI);
+    this.bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
+    this.playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
+    this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
   }
 
   addBricks() {
     var brick = new Brick(this, 200, 200);
-    this.game.add.existing(brick);
+    this.bricksGroup.add(brick);
   }
 }
 
