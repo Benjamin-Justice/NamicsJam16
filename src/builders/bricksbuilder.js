@@ -2,9 +2,9 @@ import Constants from '../util/constants';
 import Brick from '../prefabs/brick';
 
 class BricksBuilder {
-    constructor(game) {
+    constructor(game, bricksGroup) {
         this.game = game;
-        this.bricksGroup = this.game.bricksGroup;
+        this.bricksGroup = bricksGroup;
 
         this.brickTypes = [0,2,4,6,7];
     }
