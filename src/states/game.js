@@ -1,5 +1,5 @@
 import Constants from '../util/constants';
-import Brick from '../prefabs/brick';
+import BricksBuilder from '../builders/bricksbuilder'
 import Utils from '../util/utils';
 import Paddle from '../prefabs/paddle';
 
@@ -11,7 +11,7 @@ class Game extends Phaser.State {
 
     preload() {
         this.addBasicGroups();
-        this.addBricks();
+        new BricksBuilder(this, this.bricksGroup).addBricks();
         this.game.add.existing(this.rootGroup);
     }
 
@@ -40,11 +40,6 @@ class Game extends Phaser.State {
         this.bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
         this.playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
         this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
-    }
-
-    addBricks() {
-        var brick = new Brick(this, 200, 200);
-        this.bricksGroup.add(brick);
     }
 
     addPaddle() {
