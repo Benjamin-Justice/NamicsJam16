@@ -13,7 +13,7 @@ class Game extends Phaser.State {
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        new BricksBuilder(this, this.bricksGroup).addBricks();
+        new BricksBuilder(this).addBricks();
         this.game.add.existing(this.rootGroup);
     }
 
@@ -25,13 +25,13 @@ class Game extends Phaser.State {
 
         this.input.onDown.add(this.endGame, this);
 
-        let ball = new Ball(this.game, 0, 0);
-        this.game.add.existing(ball);
         this.addPaddle();
+        this.addBall();
+
     }
 
     update() {
-
+      this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle);
     }
 
     endGame() {
@@ -44,6 +44,11 @@ class Game extends Phaser.State {
         this.bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
         this.playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
         this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
+
+    }
+
+    ballHitPaddle() {
+      alert('Treffer !');
     }
 
     addPaddle() {
@@ -51,7 +56,12 @@ class Game extends Phaser.State {
         paddle.body.collideWorldBounds = true;
         paddle.body.bounce.set(1);
         paddle.body.immovable = true;
-        this.game.add.existing(paddle);
+        this.playerGroup.add(paddle);
+    }
+
+    addBall() {
+        let ball = new Ball(this.game, 0, 0)
+        this.ballGroup.add(ball)
     }
 }
 

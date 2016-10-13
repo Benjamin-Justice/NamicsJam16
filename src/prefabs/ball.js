@@ -16,6 +16,7 @@ class Ball extends Phaser.Sprite {
 
         this.body.velocity.y = -300;
         this.body.velocity.x = -75;
+
     }
 
     update() {

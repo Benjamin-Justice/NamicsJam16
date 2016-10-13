@@ -24,7 +24,7 @@ class Preloader extends Phaser.State {
 
     loadResources() {
         // load your resources here
-        this.game.load.spritesheet('bricksspritesheet', 'assets/bricks.png', 64, 32, 20, 1);
+        this.game.load.spritesheet('bricksspritesheet', 'assets/bricks.png', 64, 32, 20, 1, 1);
         this.game.load.image('castle', 'assets/backgrounds/uncolored_castle.png');
         this.game.load.image('desert', 'assets/backgrounds/uncolored_desert.png');
         this.game.load.image('forest', 'assets/backgrounds/uncolored_forest.png');
