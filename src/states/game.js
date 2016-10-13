@@ -1,3 +1,5 @@
+import Paddle from '../prefabs/paddle.js';
+
 class Game extends Phaser.State {
 
   constructor() {
@@ -11,6 +13,8 @@ class Game extends Phaser.State {
     text.anchor.set(0.5);
 
     this.input.onDown.add(this.endGame, this);
+    var paddle = new Paddle(this.game, 0, 0);
+    this.game.add.existing(paddle);
   }
 
   update() {

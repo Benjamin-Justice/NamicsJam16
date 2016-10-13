@@ -1,39 +1,45 @@
 /**
- * @author       Richard Davey <rich@photonstorm.com>
- * @copyright    2015 Photon Storm Ltd.
- * @license      {@link https://github.com/photonstorm/phaser/blob/master/license.txt|MIT License}
- */
-
-/**
  * The PhysicsBody component manages the Game Objects physics body and physics enabling.
  * It also overrides the x and y properties, ensuring that any manual adjustment of them is reflected in the physics body itself.
  *
  * @class
  */
-Phaser.Component.PhysicsBody = function () {};
+Phaser.Component.Sample = function () {};
 
-/**
- * The PhysicsBody component preUpdate handler.
- * Called automatically by the Game Object.
- *
- * @method
- */
-Phaser.Component.PhysicsBody.preUpdate = function () {
 
-    return true;
 
-};
+Phaser.Component.Sample.prototype = {
 
-/**
- * The PhysicsBody component postUpdate handler.
- * Called automatically by the Game Object.
- *
- * @method
- */
-Phaser.Component.PhysicsBody.postUpdate = function () {
+    /**
+     * The PhysicsBody component preUpdate handler.
+     * Called automatically by the Game Object.
+     *
+     * @method
+     */
+    preUpdate: function () {
 
-};
+        return true;
 
-Phaser.Component.PhysicsBody.prototype = {
+    },
 
+    /**
+     * Override this method in your own custom objects to handle any update requirements.
+     * It is called immediately after `preUpdate` and before `postUpdate`.
+     * Remember if this Game Object has any children you should call update on those too.
+     *
+     * @method
+     */
+    update: function() {
+
+    },
+
+    /**
+     * The PhysicsBody component postUpdate handler.
+     * Called automatically by the Game Object.
+     *
+     * @method
+     */
+    postUpdate: function () {
+
+    }
 };
