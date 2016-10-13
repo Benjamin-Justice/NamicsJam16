@@ -49,6 +49,8 @@ class Game extends Phaser.State {
     addPaddle() {
         var paddle = new Paddle(this.game, this.game.canvas.width/2, this.game.canvas.height - 100);
         paddle.body.collideWorldBounds = true;
+        paddle.body.bounce.set(1);
+        paddle.body.immovable = true;
         this.game.add.existing(paddle);
     }
 }
