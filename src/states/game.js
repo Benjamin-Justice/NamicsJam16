@@ -11,13 +11,13 @@ class Game extends Phaser.State {
     }
 
     preload() {
+        Utils.loadBackground(this.game)
         this.addBasicGroups();
         new BricksBuilder(this, this.bricksGroup).addBricks();
         this.game.add.existing(this.rootGroup);
     }
 
     create() {
-        Utils.loadBackground(this.game)
         var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'Game', {
             font: '42px Arial', fill: '#ffffff', align: 'center'
         });
@@ -47,7 +47,7 @@ class Game extends Phaser.State {
     }
 
     addPaddle() {
-        var paddle = new Paddle(this.game, 0, 0);
+        var paddle = new Paddle(this.game, this.game.canvas.width/2, this.game.canvas.height - 100);
         paddle.body.collideWorldBounds = true;
         this.game.add.existing(paddle);
     }

@@ -8,6 +8,7 @@ class Paddle extends Phaser.Sprite {
 
         this.movespeed = 20;
 
+        this.anchor.setTo(0.5, 0.5);
         this.initPhysics();
         this.initInput()
     }
