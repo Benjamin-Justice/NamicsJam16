@@ -34,6 +34,7 @@ class Preloader extends Phaser.State {
         this.game.load.image('plain', 'assets/backgrounds/uncolored_plain.png');
         this.game.load.image('talltrees', 'assets/backgrounds/uncolored_talltrees.png');
         this.game.load.image('paddle', 'assets/paddle.png');
+        this.game.load.image('ball', 'assets/ball.png');
     }
 
     onLoadComplete() {

@@ -2,6 +2,7 @@ import Constants from '../util/constants';
 import BricksBuilder from '../builders/bricksbuilder'
 import Utils from '../util/utils';
 import Paddle from '../prefabs/paddle';
+import Ball from '../prefabs/ball';
 
 class Game extends Phaser.State {
 
@@ -23,6 +24,9 @@ class Game extends Phaser.State {
         text.anchor.set(0.5);
 
         this.input.onDown.add(this.endGame, this);
+
+        let ball = new Ball(this.game, 0, 0);
+        this.game.add.existing(ball);
         this.addPaddle();
     }
 
