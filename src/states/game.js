@@ -5,6 +5,8 @@ class Game extends Phaser.State {
   }
 
   create() {
+    this.game.add.tileSprite(0, 0, 800, 600, 'starfield');
+
     var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'Game', {
       font: '42px Arial', fill: '#ffffff', align: 'center'
     });

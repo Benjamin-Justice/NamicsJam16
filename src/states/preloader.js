@@ -13,7 +13,7 @@ class Preloader extends Phaser.State {
 
     //Setup loading and its events
     //this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
-    //this.loadResources();
+    this.loadResources();
   }
 
   update() {
@@ -24,6 +24,7 @@ class Preloader extends Phaser.State {
 
   loadResources() {
       // load your resources here
+    this.game.load.image('starfield', 'assets/misc/starfield.jpg');
   }
 
   onLoadComplete() {
