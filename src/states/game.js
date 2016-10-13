@@ -23,8 +23,7 @@ class Game extends Phaser.State {
         text.anchor.set(0.5);
 
         this.input.onDown.add(this.endGame, this);
-        var paddle = new Paddle(this.game, 0, 0);
-        this.game.add.existing(paddle);
+        this.addPaddle();
     }
 
     update() {
@@ -46,6 +45,12 @@ class Game extends Phaser.State {
     addBricks() {
         var brick = new Brick(this, 200, 200);
         this.bricksGroup.add(brick);
+    }
+
+    addPaddle() {
+        var paddle = new Paddle(this.game, 0, 0);
+        paddle.body.collideWorldBounds = true;
+        this.game.add.existing(paddle);
     }
 }
 
