@@ -13,7 +13,7 @@ class Game extends Phaser.State {
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        new BricksBuilder(this, this.bricksGroup).addBricks();
+        new BricksBuilder(this).addBricks();
         this.game.add.existing(this.rootGroup);
     }
 
