@@ -48,7 +48,7 @@ class Game extends Phaser.State {
     }
 
     ballHitPaddle() {
-      alert('Treffer !');
+      console.log('Treffer !');
     }
 
     addPaddle() {
