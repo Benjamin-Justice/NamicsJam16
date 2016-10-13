@@ -23,7 +23,8 @@ class Preloader extends Phaser.State {
   }
 
   loadResources() {
-      // load your resources here
+    // load your resources here
+    this.game.load.spritesheet('bricksspritesheet', 'assets/bricks.png', 64, 32, 20, 1);
     this.game.load.image('starfield', 'assets/misc/starfield.jpg');
   }
 
