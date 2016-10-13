@@ -2,8 +2,11 @@
 <project version="4">
   <component name="EclipseCodeFormatter">
     <option name="defaultSettings" value="true" />
-    <option name="id" value="1472142114335" />
+    <option name="id" value="1465888411956" />
     <option name="name" value="default" />
+  </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
