@@ -10,7 +10,7 @@ class Paddle extends Phaser.Sprite {
 
         this.anchor.setTo(0.5, 0.5);
         this.initPhysics();
-        this.initInput()
+        this.initInput();
     }
 
     initPhysics() {
@@ -49,6 +49,8 @@ class Paddle extends Phaser.Sprite {
     pad1Right() {
         return this.pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT) || this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1;
     }
+
+
 
 }
 export default Paddle;
