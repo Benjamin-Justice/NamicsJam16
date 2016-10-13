@@ -10,13 +10,13 @@ class Game extends Phaser.State {
     }
 
     preload() {
+        Utils.loadBackground(this.game)
         this.addBasicGroups();
         new BricksBuilder(this, this.bricksGroup).addBricks();
         this.game.add.existing(this.rootGroup);
     }
 
     create() {
-        Utils.loadBackground(this.game)
         var text = this.add.text(this.game.width * 0.5, this.game.height * 0.5, 'Game', {
             font: '42px Arial', fill: '#ffffff', align: 'center'
         });
