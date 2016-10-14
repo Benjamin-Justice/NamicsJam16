@@ -19,13 +19,16 @@ class Level extends Phaser.State {
     initializeGame() {
         this.score = new Score();
         this.lives = new Lives(3);
+        this.currentLevel = 0;
     }
 
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
         //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
-        this.bricksBuilder = new TiledBricksBuilder('snake', this, this.bricksGroup);
+        this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
+
+
         this.game.add.existing(this.rootGroup);
     }
 
@@ -38,6 +41,9 @@ class Level extends Phaser.State {
 
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.togglePause, this);
+
+        var next = this.input.keyboard.addKey(Phaser.Keyboard.G);
+        next.onDown.add(this.nextLevel, this);
     }
 
     update() {
@@ -47,7 +53,20 @@ class Level extends Phaser.State {
 
     endGame() {
         this.initializeGame();
-        this.game.state.start('gameover', false, false);
+        this.game.state.start('gameover');
+    }
+
+    nextLevel() {
+        if (this.currentLevel < Constants.MAPS.length-1) {
+            this.currentLevel++;
+            this.game.state.start('level');
+        } else {
+            this.winGame();
+        }
+    }
+
+    winGame() {
+        this.endGame();
     }
 
     addBasicGroups() {
@@ -70,7 +89,7 @@ class Level extends Phaser.State {
         }
         console.log(this.bricksGroup.children.length );
         if (this.bricksGroup.children.length == 0){
-            this.endGame();
+            this.nextLevel();
         }
     }
 

@@ -1,5 +1,9 @@
 import Constants from '../util/constants';
 import Brick from '../prefabs/brick';
+import NormalBrick from '../prefabs/normalbrick';
+import SolidBrick from '../prefabs/solidbrick';
+import MultiBrick from '../prefabs/multibrick';
+import BallMultiplierBrick from '../prefabs/ballmultiplierbrick';
 
 const BRICK_VALUE_NONE = 0;
 const BRICK_VALUE_RED = 1;
@@ -47,16 +51,16 @@ class TiledBricksBuilder {
         if (brickValue === BRICK_VALUE_NONE) {
             brickType = undefined;
         } else if (brickValue === BRICK_VALUE_WHITE) {
-            brickType = Constants.BRICK_WHITE;
+            brickType = new MultiBrick();
             this.cntDestroyableBricks++;
         } else if (brickValue === BRICK_VALUE_YELLOW) {
-            brickType = Constants.BRICK_YELLOW;
+            brickType = new SolidBrick();
             this.cntSolidBricks++;
         } else if (brickValue === BRICK_VALUE_GREEN) {
-            brickType = Constants.BRICK_GREEN;
-            this.cntSolidBricks++;
+            brickType = new BallMultiplierBrick();
+            this.cntDestroyableBricks++;
         } else {
-            brickType = Constants.BRICK_RED;
+            brickType = new NormalBrick();
             this.cntDestroyableBricks++;
         }
         if (brickType !== undefined) {

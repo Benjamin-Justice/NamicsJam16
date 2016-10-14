@@ -1,21 +1,14 @@
 import Constants from '../util/constants';
+import NormalBrick from './normalbrick';
+import SolidBrick from './solidbrick';
+import MultiBrick from './multibrick';
+import BallMultiplierBrick from './ballmultiplierbrick';
 
 class Brick extends Phaser.Sprite {
-    constructor(game, x, y, frame) {
-        super(game, x, y, "bricksspritesheet", frame);
-        this.isSolid = frame === Constants.BRICK_YELLOW;
-        this.isMultiBrick = frame === Constants.BRICK_WHITE;
-        this.isBallMultiplierBrick = frame === Constants.BRICK_GREEN;
-        this.hitCnt = 0;
+    constructor(game, x, y, brickType) {
+        super(game, x, y, "bricksspritesheet");
+        this.brickType = brickType;
         this.initPhysics();
-        this.initPoints();
-    }
-
-    initPoints() {
-        this.points = 1;
-        if (this.isMultiBrick) {
-            this.points = this.points * 3;
-        }
     }
 
     initPhysics() {
@@ -26,41 +19,23 @@ class Brick extends Phaser.Sprite {
     }
 
     hit() {
-        this.hitCnt++;
-        if (this.isMultiBrick) {
-            if (this.hitCnt === 1) {
-                this.frame = Constants.BRICK_WHITE_2;
-            } else if (this.hitCnt === 2) {
-                this.frame = Constants.BRICK_WHITE_1;
-            }
-        }
+        this.brickType.hit();
     }
 
     isDestroyed() {
-        if (this.isSolid) {
-            return false;
-        }
-        if (this.isMultiBrick) {
-            return this.hitCnt >= 3;
-        }
-        return this.hitCnt >= 1;
+        return this.brickType.isDestroyed();
     }
 
     isBallMultiplierBrick() {
-        return this.isBallMultiplierBrick();
-    }
-
-    update() {
-
+        return this.brickType.getName() === 'ballmultiplier';
     }
 
     getPoints() {
-        if (!this.isSolid) {
-            return this.points;
-        }
-        else {
-            return 0;
-        }
+        return this.brickType.getPoints();
+    }
+
+    update() {
+        this.frame = this.brickType.getFrame();
     }
 }
 
