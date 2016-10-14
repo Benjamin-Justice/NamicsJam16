@@ -4,17 +4,17 @@ class Utils {
     }
 
     static loadBackground(game) {
-        game.add.tileSprite(game.width * 0.5 - 400, game.height * 0.5 - 524, 1024, 1024, 'castle');
+        game.add.tileSprite(game.width * 0.5 - 512, game.height * 0.5 - 524, 1024, 1024, 'castle');
     }
 
     static loadBackground(game, name) {
-        game.add.tileSprite(game.width * 0.5 - 400, game.height * 0.5 - 524, 1024, 1024, name);
+        game.add.tileSprite(game.width * 0.5 - 512, game.height * 0.5 - 524, 1024, 1024, name);
     }
 
     static loadRandomBackground(game) {
         var backgrounds = ['castle', 'desert', 'forest', 'hills', 'peaks', 'piramids', 'plain', 'talltrees'];
         var index = Utils.getRandomInt(0, backgrounds.length);
-        game.add.tileSprite(game.width * 0.5 - 400, game.height * 0.5 - 524, 1024, 1024, backgrounds[index]);
+        game.add.tileSprite(game.width * 0.5 - 512, game.height * 0.5 - 524, 1024, 1024, backgrounds[index]);
     }
 
     static getRandomInt(min, max) {
