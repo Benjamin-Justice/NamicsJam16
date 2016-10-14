@@ -15,6 +15,9 @@ class Paddle extends Phaser.Sprite {
 
     initPhysics() {
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
+        this.body.collideWorldBounds = true;
+        this.body.bounce.set(1);
+        this.body.immovable = true;
     }
 
     initInput() {
