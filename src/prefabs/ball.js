@@ -37,7 +37,6 @@ class Ball extends Phaser.Sprite {
     }
 
     updateInput() {
-        console.log(this.pad1.isDown((Phaser.Gamepad.XBOX360_A)));
         if (this.ballSizeKey.isDown || this.pad1.isDown((Phaser.Gamepad.XBOX360_A))) {
             this.enlargeBall();
         }

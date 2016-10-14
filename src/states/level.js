@@ -120,7 +120,6 @@ class Level extends Phaser.State {
                 this.addBall(ball.duplicateBall());
             }
         }
-        console.log(this.bricksGroup.children.length);
         if (this.bricksGroup.children.length == 0) {
             this.nextLevel();
         }
@@ -152,7 +151,6 @@ class Level extends Phaser.State {
             ball.destroy();
         } else {
             this.lives.decrement();
-            console.log(this.lives);
             if (this.lives.isEmpty()) {
                 this.endGame();
             } else {

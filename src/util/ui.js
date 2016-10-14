@@ -15,7 +15,6 @@ class UI {
     }
 
     createText() {
-        console.log("create tetxts")
         this.text = this.game.add.text(10, 10, "Score: ");
         this.text.font = 'Orbitron';
         this.text.fontSize = 24;
