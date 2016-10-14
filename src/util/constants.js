@@ -9,6 +9,22 @@ class Constants {
         this.GROUP_PLAYER = 'player-group';
         this.GROUP_BALL = 'ball-group';
     }
+
+    static get BRICK_RED() {
+        return 0;
+    }
+    static get BRICK_YELLOW() {
+        return 2;
+    }
+    static get BRICK_LILAC() {
+        return 4;
+    }
+    static get BRICK_WHITE() {
+        return 6;
+    }
+    static get BRICK_GREEN() {
+        return 7;
+    }
 }
 
 export default Constants;

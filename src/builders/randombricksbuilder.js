@@ -1,21 +1,16 @@
 import Constants from '../util/constants';
 import Brick from '../prefabs/brick';
 
-class BricksBuilder {
+class RandomBricksBuilder {
     constructor(game, bricksGroup) {
         this.game = game;
         this.bricksGroup = bricksGroup;
-
-        this.brickTypes = [0,2,4,6,7];
+        this.brickTypes = [Constants.BRICK_RED, Constants.BRICK_YELLOW, Constants.Brick_LILAC, Constants.BRICK_WHITE, Constants.BRICK_GREEN];
     }
 
     addBricks() {
-        this.randomBricks();
-    }
-
-    randomBricks() {
-        for (var y = 100; y < 300; y+=40) {
-            for (var x = 100; x < 700; x += 70) {
+        for (var y = 50; y < 250; y+=40) {
+            for (var x = 100; x < 900; x += 70) {
                 this.bricksGroup.add(new Brick(this.game, x, y, this.randomBrickType()));
             }
         }
@@ -28,4 +23,4 @@ class BricksBuilder {
     }
 }
 
-export default BricksBuilder;
+export default RandomBricksBuilder;

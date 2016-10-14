@@ -1,36 +1,49 @@
 import Constants from '../util/constants';
-import BricksBuilder from '../builders/bricksbuilder'
+import RandomBricksBuilder from '../builders/randombricksbuilder'
+import TiledBricksBuilder from '../builders/tiledbricksbuilder'
 import Utils from '../util/utils';
 import Paddle from '../prefabs/paddle';
 import Ball from '../prefabs/ball';
 import Score from '../util/score';
+import Lives from '../util/lives';
+import ballHitPaddle from '../util/ballHitPaddle';
 
 class Level extends Phaser.State {
 
 
     constructor() {
         super();
+        this.initializeGame();
+    }
+
+    initializeGame() {
         this.score = new Score();
+        this.lives = new Lives(3);
     }
 
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        new BricksBuilder(this, this.bricksGroup).addBricks();
+        //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
+        this.bricksBuilder = new TiledBricksBuilder('lab', this, this.bricksGroup);
         this.game.add.existing(this.rootGroup);
     }
 
     create() {
+        this.physics.arcade.checkCollision.down = false;
+
+        this.bricksBuilder.addBricks();
         this.addPaddle();
         this.addBall();
     }
 
     update() {
-        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle, null, this);
+        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, ballHitPaddle, null, this);
         this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitBrick, null, this);
     }
 
     endGame() {
+        this.initializeGame();
         this.game.state.start('level', false, false);
     }
 
@@ -40,11 +53,6 @@ class Level extends Phaser.State {
         this.bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
         this.playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
         this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
-
-    }
-
-    ballHitPaddle() {
-        console.log('Treffer !');
     }
 
     ballHitBrick(ball, brick) {
@@ -67,8 +75,20 @@ class Level extends Phaser.State {
 
     addBall() {
         let ball = new Ball(this.game, 0, 0);
-        this.ballGroup.add(ball)
+        this.ballGroup.add(ball);
+        ball.events.onOutOfBounds.add(this.ballLost, this);
     }
+
+    ballLost() {
+        this.lives.decrement();
+        console.log(this.lives)
+        if (this.lives.isEmpty()) {
+            this.endGame();
+        } else {
+            this.ballGroup.children[0].resetBall();
+        }
+    }
+
 }
 
 export default Level;

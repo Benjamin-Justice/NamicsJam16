@@ -1,0 +1,3 @@
+function drawUI(score, lives) {
+
+}

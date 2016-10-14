@@ -1,6 +1,5 @@
 class Score {
     constructor(){
-        let score;
         this.score = 0;
         this.highscore = 0;
     }
@@ -15,6 +14,7 @@ class Score {
     get(){
         return this.score;
     }
+
 }
 
 export default Score;
