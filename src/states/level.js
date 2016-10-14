@@ -36,7 +36,7 @@ class Level extends Phaser.State {
 
         this.bricksBuilder.addBricks();
         this.addPaddle();
-        this.addBall();
+        this.addNewBall();
 
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.togglePause, this);
@@ -78,16 +78,16 @@ class Level extends Phaser.State {
     }
 
     ballHitBrick(ball, brick) {
-        this.destroyBrick(brick);
+        this.destroyBrick(brick, ball);
     }
 
-    destroyBrick(brick) {
+    destroyBrick(brick, ball) {
         brick.hit();
         if (brick.isDestroyed()) {
             brick.destroy();
             this.score.add(brick.getPoints())
             if (brick.isBallMultiplierBrick()) {
-                this.addBall();
+                this.addBall(ball.duplicateBall());
             }
         }
         console.log(this.bricksGroup.children.length);
@@ -105,9 +105,13 @@ class Level extends Phaser.State {
         this.playerGroup.add(paddle);
     }
 
-    addBall() {
+    addNewBall() {
         let ball = new Ball(this.game, 0, 0);
         ball.resetBall();
+        this.addBall(ball);
+    }
+
+    addBall(ball) {
         this.ballGroup.add(ball);
         ball.events.onOutOfBounds.add(this.ballLost, this, 0, ball);
     }
