@@ -1,6 +1,7 @@
 import Constants from '../util/constants';
 import Brick from '../prefabs/brick';
 
+const BRICK_VALUE_NONE = 0;
 const BRICK_VALUE_RED = 1;
 const BRICK_VALUE_YELLOW = 3;
 const BRICK_VALUE_WHITE = 7;
@@ -30,28 +31,29 @@ class TiledBricksBuilder {
     }
 
     addFromBricksData(bricksDataArray, height, width) {
-        console.log('bricksData: ', bricksDataArray);
         var i = 0;
         for(var y=0; y<height; y++) {
             for(var x=0; x<width; x++) {
-                i++;
                 var brickValue = bricksDataArray[i];
                 this.addBrick(brickValue, x, y);
+                i++;
             }
         }
     }
 
     addBrick(brickValue, x, y) {
-        var brickType = undefined;
-        if (brickValue == BRICK_VALUE_WHITE) {
+        var brickType;
+        if (brickValue == BRICK_VALUE_NONE) {
+            brickType = undefined;
+        } else if (brickValue == BRICK_VALUE_WHITE) {
             brickType = Constants.BRICK_WHITE;
-            this.cntDestroyableBricks++;
-        } else if (brickValue == BRICK_VALUE_RED) {
-            brickType = Constants.BRICK_RED;
             this.cntDestroyableBricks++;
         } else if (brickValue == BRICK_VALUE_YELLOW) {
             brickType = Constants.BRICK_YELLOW;
             this.cntSolidBricks++;
+        } else {
+            brickType = Constants.BRICK_RED;
+            this.cntDestroyableBricks++;
         }
         if (brickType != undefined) {
             var brick = new Brick(this.game, x * 64, y * 32, brickType);
