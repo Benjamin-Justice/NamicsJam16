@@ -18,15 +18,13 @@ class Level extends Phaser.State {
     }
 
     create() {
-        // this.input.onDown.add(this.endGame, this);
-
         this.addPaddle();
         this.addBall();
     }
 
     update() {
-        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle);
-        this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitPaddle);
+        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle, null, this);
+        this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitBrick, null, this);
     }
 
     endGame() {
@@ -46,13 +44,25 @@ class Level extends Phaser.State {
         console.log('Treffer !');
     }
 
+    ballHitBrick(ball, brick) {
+        this.destroyBrick(brick);
+    }
+
+    destroyBrick(brick) {
+        brick.destroy();
+        console.log(this.bricksGroup.children.length );
+        if (this.bricksGroup.children.length == 0){
+            this.endGame();
+        }
+    }
+
     addPaddle() {
         var paddle = new Paddle(this.game, this.game.canvas.width / 2, this.game.canvas.height - 100);
         this.playerGroup.add(paddle);
     }
 
     addBall() {
-        let ball = new Ball(this.game, 0, 0)
+        let ball = new Ball(this.game, 0, 0);
         this.ballGroup.add(ball)
     }
 }
