@@ -13,10 +13,7 @@ class Ball extends Phaser.Sprite {
 
         this.body.collideWorldBounds = true;
         this.body.bounce.set(1);
-
-        this.body.velocity.y = -300;
-        this.body.velocity.x = -75;
-
+        this.setVelocity();
     }
 
     update() {
@@ -26,5 +23,16 @@ class Ball extends Phaser.Sprite {
     updateInput() {
 
     }
+
+    resetBall() {
+        this.reset(0, 0);
+        this.setVelocity();
+    }
+
+    setVelocity() {
+        this.body.velocity.y = -300;
+        this.body.velocity.x = -75;
+    }
+
 }
 export default Ball;
