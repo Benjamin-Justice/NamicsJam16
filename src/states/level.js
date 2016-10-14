@@ -35,6 +35,9 @@ class Level extends Phaser.State {
         this.bricksBuilder.addBricks();
         this.addPaddle();
         this.addBall();
+
+        var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spaceKey.onDown.add(this.togglePause, this);
     }
 
     update() {
@@ -44,7 +47,7 @@ class Level extends Phaser.State {
 
     endGame() {
         this.initializeGame();
-        this.game.state.start('level', false, false);
+        this.game.state.start('gameover', false, false);
     }
 
     addBasicGroups() {
@@ -96,6 +99,10 @@ class Level extends Phaser.State {
             this.ballGroup.children[0].resetBall();
             this.playerGroup.children[0].resetPaddle();
         }
+    }
+
+    togglePause() {
+        this.physics.arcade.isPaused = (this.physics.arcade.isPaused) ? false : true;
     }
 
 }
