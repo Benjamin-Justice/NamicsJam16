@@ -3,6 +3,7 @@ import BricksBuilder from '../builders/bricksbuilder'
 import Utils from '../util/utils';
 import Paddle from '../prefabs/paddle';
 import Ball from '../prefabs/ball';
+import ballHitPaddle from '../util/ballHitPaddle';
 
 class Level extends Phaser.State {
 
@@ -27,8 +28,8 @@ class Level extends Phaser.State {
     }
 
     update() {
-        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle);
-        this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitPaddle);
+        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle, null, this);
+        this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitBrick, null, this);
     }
 
     endGame() {
@@ -41,11 +42,18 @@ class Level extends Phaser.State {
         this.bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
         this.playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
         this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
-
     }
 
-    ballHitPaddle() {
-        console.log('Treffer !');
+    ballHitBrick(ball, brick) {
+        this.destroyBrick(brick);
+    }
+
+    destroyBrick(brick) {
+        brick.destroy();
+        console.log(this.bricksGroup.children.length );
+        if (this.bricksGroup.children.length == 0){
+            this.endGame();
+        }
     }
 
     addPaddle() {
@@ -54,7 +62,7 @@ class Level extends Phaser.State {
     }
 
     addBall() {
-        let ball = new Ball(this.game, 0, 0)
+        let ball = new Ball(this.game, 0, 0);
         this.ballGroup.add(ball)
         ball.events.onOutOfBounds.add(this.ballLost, this);
     }
