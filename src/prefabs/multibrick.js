@@ -10,9 +10,9 @@ class MultiBrick extends NormalBrick {
 
     hit() {
         this.hits++;
-        if (this.hitCnt === 1) {
+        if (this.hits === 1) {
             this.frame = Constants.BRICK_WHITE_2;
-        } else if (this.hitCnt === 2) {
+        } else if (this.hits === 2) {
             this.frame = Constants.BRICK_WHITE_1;
         }
     }
