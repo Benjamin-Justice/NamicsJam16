@@ -20,13 +20,16 @@ class Level extends Phaser.State {
     initializeGame() {
         this.score = new Score();
         this.lives = new Lives(3);
+        this.currentLevel = 0;
     }
 
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
         //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
-        this.bricksBuilder = new TiledBricksBuilder('snake', this, this.bricksGroup);
+        this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
+
+
         this.game.add.existing(this.rootGroup);
         this.ui = new UI(this.game, this.uiGroup, this.score, this.lives);
     }
@@ -37,6 +40,12 @@ class Level extends Phaser.State {
         this.bricksBuilder.addBricks();
         this.addPaddle();
         this.addBall();
+
+        var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spaceKey.onDown.add(this.togglePause, this);
+
+        var next = this.input.keyboard.addKey(Phaser.Keyboard.G);
+        next.onDown.add(this.nextLevel, this);
     }
 
     update() {
@@ -47,7 +56,20 @@ class Level extends Phaser.State {
 
     endGame() {
         this.initializeGame();
-        this.game.state.start('level', false, false);
+        this.game.state.start('gameover');
+    }
+
+    nextLevel() {
+        if (this.currentLevel < Constants.MAPS.length-1) {
+            this.currentLevel++;
+            this.game.state.start('level');
+        } else {
+            this.winGame();
+        }
+    }
+
+    winGame() {
+        this.endGame();
     }
 
     addBasicGroups() {
@@ -70,7 +92,7 @@ class Level extends Phaser.State {
         }
         console.log(this.bricksGroup.children.length );
         if (this.bricksGroup.children.length == 0){
-            this.endGame();
+            this.nextLevel();
         }
     }
 
@@ -99,6 +121,10 @@ class Level extends Phaser.State {
             this.ballGroup.children[0].resetBall();
             this.playerGroup.children[0].resetPaddle();
         }
+    }
+
+    togglePause() {
+        this.physics.arcade.isPaused = (this.physics.arcade.isPaused) ? false : true;
     }
 
 }
