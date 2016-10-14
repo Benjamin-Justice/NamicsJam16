@@ -33,7 +33,7 @@ class Constants {
     }
 
     static get MAPS() {
-        return ['irgendwas', 'lab', 'rob', 'snake', 'balls'];
+        return ['lab', 'it', 'rob', 'snake', 'balls'];
     }
 }
 
