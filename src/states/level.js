@@ -68,7 +68,7 @@ class Level extends Phaser.State {
     }
 
     ballLost() {
-        this.lives -= 1;
+        this.lives--;
 
         if (this.lives == 0) {
             this.endGame();
