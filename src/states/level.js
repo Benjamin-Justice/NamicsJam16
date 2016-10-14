@@ -60,12 +60,19 @@ class Level extends Phaser.State {
     }
 
     destroyBrick(brick) {
-        brick.destroy();
-        this.score.add(1);
-        console.log("score: " + this.score.get());
-        if (this.bricksGroup.children.length == 0) {
+        brick.hit();
+        if (brick.isDestroyed()) {
+            brick.destroy();
+            this.score.add(brick.getPoints())
+        }
+        console.log(this.bricksGroup.children.length );
+        if (this.bricksGroup.children.length == 0){
             this.endGame();
         }
+    }
+
+    getPoints() {
+
     }
 
     addPaddle() {
@@ -75,17 +82,19 @@ class Level extends Phaser.State {
 
     addBall() {
         let ball = new Ball(this.game, 0, 0);
+        ball.resetBall();
         this.ballGroup.add(ball);
         ball.events.onOutOfBounds.add(this.ballLost, this);
     }
 
     ballLost() {
         this.lives.decrement();
-        console.log(this.lives)
+        console.log(this.lives);
         if (this.lives.isEmpty()) {
             this.endGame();
         } else {
             this.ballGroup.children[0].resetBall();
+            this.playerGroup.children[0].resetPaddle();
         }
     }
 

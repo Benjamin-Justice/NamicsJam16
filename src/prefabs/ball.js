@@ -25,7 +25,7 @@ class Ball extends Phaser.Sprite {
     }
 
     resetBall() {
-        this.reset(0, 0);
+        this.reset(this.game.canvas.width / 2, this.game.canvas.height - 100 - this.width);
         this.setVelocity();
     }
 
