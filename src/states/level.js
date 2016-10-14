@@ -57,4 +57,4 @@ class Level extends Phaser.State {
     }
 }
 
-export default Game;
+export default Level;
