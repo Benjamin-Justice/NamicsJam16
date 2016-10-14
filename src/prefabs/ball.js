@@ -16,11 +16,19 @@ class Ball extends Phaser.Sprite {
         this.body.bounce.set(1);
         this.setVelocity();
         this.initInput();
+        this.initSound();
+
+        let ballLostSound;
+
     }
 
     initInput() {
         this.inputEnabled = true;
         this.ballSizeKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+    }
+
+    initSound() {
+        this.ballLostSound = this.game.add.audio('ballLostSound');
     }
 
     update() {

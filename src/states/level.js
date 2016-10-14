@@ -29,7 +29,7 @@ class Level extends Phaser.State {
         this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
 
 
-        this.game.add.existing(this.rootGroup);
+        this.ballLostSound = this.game.add.existing(this.rootGroup);
         this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel]);
     }
 
@@ -115,6 +115,7 @@ class Level extends Phaser.State {
     }
 
     ballLost(ball) {
+        ball.ballLostSound.play();
         if (this.ballGroup.children.length > 1) {
             ball.destroy();
         } else {

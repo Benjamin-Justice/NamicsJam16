@@ -4,6 +4,7 @@ import NormalBrick from './normalbrick';
 class BallMultiplierBrick extends NormalBrick {
     constructor() {
         super();
+        this.sound = 'multyplierBrickSound';
     }
 
     getFrame() {
