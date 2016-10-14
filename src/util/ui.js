@@ -4,6 +4,7 @@ class UI {
         this.game = game;
         this.score = score;
         this.lives = lives;
+        this.levelName = levelName;
         let webFontConfig;
         let text;
         this.initUI();

@@ -31,7 +31,7 @@ class Level extends Phaser.State {
 
 
         this.game.add.existing(this.rootGroup);
-        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives);
+        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel]);
     }
 
     create() {
@@ -60,7 +60,7 @@ class Level extends Phaser.State {
     }
 
     nextLevel() {
-        if (this.currentLevel < Constants.MAPS.length-1) {
+        if (this.currentLevel < Constants.MAPS.length - 1) {
             this.currentLevel++;
             this.game.state.start('level');
         } else {
@@ -90,8 +90,8 @@ class Level extends Phaser.State {
             brick.destroy();
             this.score.add(brick.getPoints())
         }
-        console.log(this.bricksGroup.children.length );
-        if (this.bricksGroup.children.length == 0){
+        console.log(this.bricksGroup.children.length);
+        if (this.bricksGroup.children.length == 0) {
             this.nextLevel();
         }
     }
