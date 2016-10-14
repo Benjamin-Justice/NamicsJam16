@@ -54,7 +54,7 @@ class Brick extends Phaser.Sprite {
         //  The second gives each particle a 2000ms lifespan
         //  The third is ignored when using burst/explode mode
         //  The final parameter (10) is how many particles will be emitted in this single burst
-        emitter.start(true, 2000, null, 10);
+        emitter.start(true, 750, null, 10);
 
     }
 }
