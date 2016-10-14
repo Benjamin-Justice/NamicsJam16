@@ -5,28 +5,62 @@ import SolidBrick from '../prefabs/solidbrick';
 import MultiBrick from '../prefabs/multibrick';
 import BallMultiplierBrick from '../prefabs/ballmultiplierbrick';
 
+const BRICK_TYPES = [{type:'normal', factor:50}, {type:'nobrick', factor:30}, {type:'solid', factor:5}, {type:'multi', factor:10}, {type:'ballmultiplier', factor:1}];
+
 class RandomBricksBuilder {
     constructor(game, bricksGroup) {
         this.game = game;
         this.bricksGroup = bricksGroup;
-        this.brickTypes = [new NormalBrick(), new NormalBrick(), new NormalBrick(), undefined, undefined, new SolidBrick(), new MultiBrick(), new BallMultiplierBrick()];
+        this.brickTypeNames = this.createTypeNames();
+    }
+
+    createTypeNames() {
+        var brickTypeNames = [];
+        for (var i=0; i< BRICK_TYPES.length; i++) {
+            var brickType = BRICK_TYPES[i];
+            for (var factor = 0; factor <= brickType.factor; factor++) {
+                brickTypeNames.push(brickType.type);
+            }
+        }
+        console.log('bricktypenames', brickTypeNames);
+        return brickTypeNames;
     }
 
     addBricks() {
         for (var y = 50; y < 250; y+=40) {
             for (var x = 100; x < 900; x += 70) {
-                var brickType = this.randomBrickType();
-                if (brickType !== undefined) {
-                    this.bricksGroup.add(new Brick(this.game, x, y, brickType));
-                }
+                var brickTypeName = this.randomBrickTypeNames();
+                this.addBrick(brickTypeName, x, y);
             }
         }
     }
 
-    randomBrickType() {
-        var random_number = Math.round(Math.random()*(this.brickTypes.length - 1));
+    addBrick(brickTypeName, x, y) {
+        var brickType = undefined;
+        switch(brickTypeName) {
+            case 'normal':
+                brickType = new NormalBrick();
+                break;
+            case 'solid':
+                brickType = new SolidBrick();
+                break;
+            case 'multi':
+                brickType = new MultiBrick();
+                break;
+            case 'ballmultiplier':
+                brickType = new BallMultiplierBrick();
+                break;
+        }
+        if (brickType !== undefined) {
+            console.log('bricktype', brickType.getName());
+            this.bricksGroup.add(new Brick(this.game, x, y, brickType));
+        }
+    }
+
+    randomBrickTypeNames() {
+        var random_number = Math.round(Math.random()*(this.brickTypeNames.length - 1));
         console.log(random_number);
-        return this.brickTypes[random_number];
+        return this.brickTypeNames[random_number];
     }
 }
 

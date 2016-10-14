@@ -26,7 +26,7 @@ class UI {
     update() {
         if (this.text) {
             this.text.text = "Level: " + this.levelName + "\n";
-            this.text.text += "Score: " + this.score.get() + "\n";
+            this.text.text += "Score: " + this.score.get() * 1000 + "\n";
             this.text.text += "Lives: " + this.lives.get();
         }
 
