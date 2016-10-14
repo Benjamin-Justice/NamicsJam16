@@ -6,7 +6,7 @@ class Paddle extends Phaser.Sprite {
         let rightKey;
         let pad1;
 
-        this.movespeed = 20;
+        this.movespeed = 40;
 
         this.anchor.setTo(0.5, 0.5);
         this.initPhysics();

@@ -3,11 +3,14 @@ import BricksBuilder from '../builders/bricksbuilder'
 import Utils from '../util/utils';
 import Paddle from '../prefabs/paddle';
 import Ball from '../prefabs/ball';
+import Score from '../util/score';
 
 class Level extends Phaser.State {
 
+
     constructor() {
         super();
+        this.score = new Score();
     }
 
     preload() {
@@ -28,7 +31,7 @@ class Level extends Phaser.State {
     }
 
     endGame() {
-        this.game.state.start('gameover');
+        this.game.state.start('level', false, false);
     }
 
     addBasicGroups() {
@@ -50,8 +53,9 @@ class Level extends Phaser.State {
 
     destroyBrick(brick) {
         brick.destroy();
-        console.log(this.bricksGroup.children.length );
-        if (this.bricksGroup.children.length == 0){
+        this.score.add(1);
+        console.log("score: " + this.score.get());
+        if (this.bricksGroup.children.length == 0) {
             this.endGame();
         }
     }

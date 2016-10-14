@@ -28,7 +28,7 @@ class Menu extends Phaser.State {
 
     restartGame() {
         this.resetGlobalVariables();
-        this.game.state.start('game');
+        this.game.state.start('level');
     }
 
 }
