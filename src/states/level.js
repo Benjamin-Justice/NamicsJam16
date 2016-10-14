@@ -25,7 +25,7 @@ class Level extends Phaser.State {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
         //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
-        this.bricksBuilder = new TiledBricksBuilder('lab', this, this.bricksGroup);
+        this.bricksBuilder = new TiledBricksBuilder('snake', this, this.bricksGroup);
         this.game.add.existing(this.rootGroup);
     }
 
