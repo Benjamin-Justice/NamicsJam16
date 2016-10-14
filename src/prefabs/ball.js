@@ -21,6 +21,7 @@ class Ball extends Phaser.Sprite {
     initInput() {
         this.inputEnabled = true;
         this.ballSizeKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+        this.pad1 = this.game.input.gamepad.pad1;
     }
 
     update() {
@@ -28,22 +29,26 @@ class Ball extends Phaser.Sprite {
     }
 
     updateInput() {
-        if (this.ballSizeKey.isDown) {
-            if (this.scale.x < 4 ) {
-              this.scale.x = this.scale.x + 0.2;
-              this.scale.y = this.scale.y + 0.2;
-            }
+        console.log(this.pad1.isDown((Phaser.Gamepad.XBOX360_A)));
+        if (this.ballSizeKey.isDown || this.pad1.isDown((Phaser.Gamepad.XBOX360_A))) {
+            this.enlargeBall();
         }
-        else if (this.ballSizeKey.isUp) {
-          for (let i = 0; i < 10; i++) {
-            if (this.scale.x > this.origWidth ) {
-              this.scale.x = this.scale.x - 0.01;
-              this.scale.y = this.scale.y - 0.01;
-            }
-          }
+        else if (this.ballSizeKey.isUp || !this.pad1.isDown((Phaser.Gamepad.XBOX360_A))) {
+            this.shrinkBall();
         }
-        else {
-            //
+    }
+
+    enlargeBall() {
+        if (this.scale.x < 4) {
+            this.scale.x = this.scale.x + 0.2;
+            this.scale.y = this.scale.y + 0.2;
+        }
+    }
+
+    shrinkBall() {
+        if (this.scale.x > this.origWidth) {
+            this.scale.x = this.scale.x - 0.1;
+            this.scale.y = this.scale.y - 0.1;
         }
     }
 

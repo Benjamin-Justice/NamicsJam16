@@ -31,7 +31,6 @@ class Paddle extends Phaser.Sprite {
         this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 
-        this.game.input.gamepad.start();
         this.pad1 = this.game.input.gamepad.pad1;
     }
 

@@ -32,6 +32,7 @@ class Level extends Phaser.State {
 
         this.game.add.existing(this.rootGroup);
         this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel]);
+        this.pad1 = this.game.input.gamepad.pad1;
     }
 
     create() {
@@ -43,6 +44,8 @@ class Level extends Phaser.State {
 
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.togglePause, this);
+        var escapeKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        escapeKey.onDown.add(this.togglePause, this);
 
         var next = this.input.keyboard.addKey(Phaser.Keyboard.G);
         next.onDown.add(this.nextLevel, this);
@@ -52,6 +55,7 @@ class Level extends Phaser.State {
         this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, ballHitPaddle, null, this);
         this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitBrick, null, this);
         this.ui.update();
+        this.updateGamepadInput()
     }
 
     endGame() {
@@ -134,6 +138,16 @@ class Level extends Phaser.State {
         this.physics.arcade.isPaused = (this.physics.arcade.isPaused) ? false : true;
     }
 
+    updateGamepadInput() {
+        if (this.pad1.isDown(Phaser.Gamepad.XBOX360_START)){
+            if (!this.buttonDownLastFrame){
+                this.togglePause();
+                this.buttonDownLastFrame = true;
+            }
+        } else {
+            this.buttonDownLastFrame= false;
+        }
+    }
 }
 
 export default Level;
