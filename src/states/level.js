@@ -66,6 +66,7 @@ class Level extends Phaser.State {
 
     addBall() {
         let ball = new Ball(this.game, 0, 0);
+        ball.resetBall()
         this.ballGroup.add(ball)
         ball.events.onOutOfBounds.add(this.ballLost, this);
     }
@@ -77,6 +78,7 @@ class Level extends Phaser.State {
             this.endGame();
         } else {
             this.ballGroup.children[0].resetBall();
+            this.playerGroup.children[0].resetPaddle();
         }
     }
 
