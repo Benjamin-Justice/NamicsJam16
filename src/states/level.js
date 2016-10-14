@@ -1,5 +1,6 @@
 import Constants from '../util/constants';
-import BricksBuilder from '../builders/bricksbuilder'
+import RandomBricksBuilder from '../builders/randombricksbuilder'
+import TiledBricksBuilder from '../builders/tiledbricksbuilder'
 import Utils from '../util/utils';
 import Paddle from '../prefabs/paddle';
 import Ball from '../prefabs/ball';
@@ -15,7 +16,8 @@ class Level extends Phaser.State {
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        new BricksBuilder(this, this.bricksGroup).addBricks();
+        //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
+        this.bricksBuilder = new TiledBricksBuilder('lab', this, this.bricksGroup);
         this.game.add.existing(this.rootGroup);
     }
 
@@ -23,6 +25,7 @@ class Level extends Phaser.State {
         this.physics.arcade.checkCollision.down = false;
         this.lives = 3;
 
+        this.bricksBuilder.addBricks();
         this.addPaddle();
         this.addBall();
     }
