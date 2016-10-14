@@ -3,6 +3,7 @@ import BricksBuilder from '../builders/bricksbuilder'
 import Utils from '../util/utils';
 import Paddle from '../prefabs/paddle';
 import Ball from '../prefabs/ball';
+import ballHitPaddle from '../util/ballHitPaddle';
 
 class Level extends Phaser.State {
 
@@ -25,8 +26,8 @@ class Level extends Phaser.State {
     }
 
     update() {
-        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle);
-        this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitPaddle);
+        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, ballHitPaddle);
+        //this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitPaddle);
     }
 
     endGame() {
@@ -39,11 +40,6 @@ class Level extends Phaser.State {
         this.bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
         this.playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
         this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
-
-    }
-
-    ballHitPaddle() {
-        console.log('Treffer !');
     }
 
     addPaddle() {
