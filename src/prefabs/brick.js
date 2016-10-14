@@ -8,6 +8,14 @@ class Brick extends Phaser.Sprite {
         this.isBallMultiplierBrick = frame === Constants.BRICK_GREEN;
         this.hitCnt = 0;
         this.initPhysics();
+        this.initPoints();
+    }
+
+    initPoints() {
+        this.points = 1;
+        if (this.isMultiBrick) {
+            this.points = this.points * 3;
+        }
     }
 
     initPhysics() {
@@ -29,7 +37,7 @@ class Brick extends Phaser.Sprite {
     }
 
     isDestroyed() {
-        if(this.isSolid) {
+        if (this.isSolid) {
             return false;
         }
         if (this.isMultiBrick) {
@@ -44,6 +52,15 @@ class Brick extends Phaser.Sprite {
 
     update() {
 
+    }
+
+    getPoints() {
+        if (!this.isSolid) {
+            return this.points;
+        }
+        else {
+            return 0;
+        }
     }
 }
 
