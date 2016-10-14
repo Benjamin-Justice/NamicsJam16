@@ -12,6 +12,8 @@ class RandomBricksBuilder {
         this.game = game;
         this.bricksGroup = bricksGroup;
         this.brickTypeNames = this.createTypeNames();
+        this.cntSolidBricks = 0;
+        this.cntDestroyableBricks = 0;
     }
 
     createTypeNames() {
@@ -40,15 +42,19 @@ class RandomBricksBuilder {
         switch(brickTypeName) {
             case 'normal':
                 brickType = new NormalBrick();
+                this.cntDestroyableBricks++;
                 break;
             case 'solid':
                 brickType = new SolidBrick();
+                this.cntSolidBricks++;
                 break;
             case 'multi':
                 brickType = new MultiBrick();
+                this.cntDestroyableBricks++;
                 break;
             case 'ballmultiplier':
                 brickType = new BallMultiplierBrick();
+                this.cntDestroyableBricks++;
                 break;
         }
         if (brickType !== undefined) {
@@ -61,6 +67,14 @@ class RandomBricksBuilder {
         var random_number = Math.round(Math.random()*(this.brickTypeNames.length - 1));
         console.log(random_number);
         return this.brickTypeNames[random_number];
+    }
+
+    getCntSolidBricks() {
+        return this.cntSolidBricks;
+    }
+
+    getCntDestroyableBricks() {
+        return this.cntDestroyableBricks;
     }
 }
 

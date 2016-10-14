@@ -120,7 +120,7 @@ class Level extends Phaser.State {
                 this.addBall(ball.duplicateBall());
             }
         }
-        if (this.bricksGroup.children.length == 0) {
+        if (this.bricksGroup.children.length == this.bricksBuilder.getCntSolidBricks()) {
             this.nextLevel();
         }
     }
