@@ -13,27 +13,33 @@ class Constants {
     static get BRICK_RED() {
         return 0;
     }
+
     static get BRICK_YELLOW() {
         return 2;
     }
+
     static get BRICK_LILAC() {
         return 4;
     }
+
     static get BRICK_WHITE() {
         return 6;
     }
+
     static get BRICK_WHITE_1() {
         return 10;
     }
+
     static get BRICK_WHITE_2() {
         return 11;
     }
+
     static get BRICK_GREEN() {
         return 7;
     }
 
     static get MAPS() {
-        return ['lab', 'it', 'rob', 'snake', 'balls'];
+        return ['one', 'two', 'three', 'lab', 'four', 'it', 'party', 'snake', 'balls', 'rob'];
     }
 }
 
