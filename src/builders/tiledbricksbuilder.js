@@ -43,19 +43,22 @@ class TiledBricksBuilder {
 
     addBrick(brickValue, x, y) {
         var brickType;
-        if (brickValue == BRICK_VALUE_NONE) {
+        if (brickValue === BRICK_VALUE_NONE) {
             brickType = undefined;
-        } else if (brickValue == BRICK_VALUE_WHITE) {
+        } else if (brickValue === BRICK_VALUE_WHITE) {
             brickType = Constants.BRICK_WHITE;
             this.cntDestroyableBricks++;
-        } else if (brickValue == BRICK_VALUE_YELLOW) {
+        } else if (brickValue === BRICK_VALUE_YELLOW) {
             brickType = Constants.BRICK_YELLOW;
+            this.cntSolidBricks++;
+        } else if (brickValue === BRICK_VALUE_GREEN) {
+            brickType = Constants.BRICK_GREEN;
             this.cntSolidBricks++;
         } else {
             brickType = Constants.BRICK_RED;
             this.cntDestroyableBricks++;
         }
-        if (brickType != undefined) {
+        if (brickType !== undefined) {
             var brick = new Brick(this.game, x * 64, y * 32, brickType);
             this.bricksGroup.add(brick);
         }

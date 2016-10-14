@@ -3,8 +3,9 @@ import Constants from '../util/constants';
 class Brick extends Phaser.Sprite {
     constructor(game, x, y, frame) {
         super(game, x, y, "bricksspritesheet", frame);
-        this.isSolid = frame == Constants.BRICK_YELLOW;
-        this.isMultiBrick = frame == Constants.BRICK_WHITE;
+        this.isSolid = frame === Constants.BRICK_YELLOW;
+        this.isMultiBrick = frame === Constants.BRICK_WHITE;
+        this.isBallMultiplierBrick = frame === Constants.BRICK_GREEN;
         this.hitCnt = 0;
         this.initPhysics();
     }
@@ -19,9 +20,9 @@ class Brick extends Phaser.Sprite {
     hit() {
         this.hitCnt++;
         if (this.isMultiBrick) {
-            if (this.hitCnt == 1) {
+            if (this.hitCnt === 1) {
                 this.frame = Constants.BRICK_WHITE_2;
-            } else if (this.hitCnt == 2) {
+            } else if (this.hitCnt === 2) {
                 this.frame = Constants.BRICK_WHITE_1;
             }
         }
@@ -35,6 +36,10 @@ class Brick extends Phaser.Sprite {
             return this.hitCnt >= 3;
         }
         return this.hitCnt >= 1;
+    }
+
+    isBallMultiplierBrick() {
+        return this.isBallMultiplierBrick();
     }
 
     update() {
