@@ -11,7 +11,6 @@ import ballHitPaddle from '../util/ballHitPaddle';
 
 class Level extends Phaser.State {
 
-
     constructor() {
         super();
         this.initializeGame();
@@ -26,11 +25,9 @@ class Level extends Phaser.State {
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
-
-
+        this.bricksBuilder = this.getNextBricksBuilder();
         this.game.add.existing(this.rootGroup);
-        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel]);
+        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel] || 'random');
     }
 
     create() {
@@ -59,16 +56,8 @@ class Level extends Phaser.State {
     }
 
     nextLevel() {
-        if (this.currentLevel < Constants.MAPS.length - 1) {
-            this.currentLevel++;
-            this.game.state.start('level');
-        } else {
-            this.winGame();
-        }
-    }
-
-    winGame() {
-        this.endGame();
+        this.currentLevel++;
+        this.game.state.start('level');
     }
 
     addBasicGroups() {
@@ -77,6 +66,14 @@ class Level extends Phaser.State {
         this.bricksGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BRICKS);
         this.playerGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_PLAYER);
         this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
+    }
+
+    getNextBricksBuilder() {
+        if (this.currentLevel < Constants.MAPS.length) {
+            return new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
+        } else {
+            return new RandomBricksBuilder(this, this.bricksGroup);
+        }
     }
 
     ballHitBrick(ball, brick) {
@@ -119,6 +116,7 @@ class Level extends Phaser.State {
             ball.destroy();
         } else {
             this.lives.decrement();
+            console.log(this.lives);
             if (this.lives.isEmpty()) {
                 this.endGame();
             } else {
