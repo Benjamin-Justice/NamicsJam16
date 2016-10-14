@@ -26,7 +26,6 @@ class Level extends Phaser.State {
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
         this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
 
 
@@ -120,7 +119,6 @@ class Level extends Phaser.State {
             ball.destroy();
         } else {
             this.lives.decrement();
-            console.log(this.lives);
             if (this.lives.isEmpty()) {
                 this.endGame();
             } else {
