@@ -22,6 +22,12 @@ class Constants {
     static get BRICK_WHITE() {
         return 6;
     }
+    static get BRICK_WHITE_1() {
+        return 10;
+    }
+    static get BRICK_WHITE_2() {
+        return 11;
+    }
     static get BRICK_GREEN() {
         return 7;
     }
