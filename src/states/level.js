@@ -8,6 +8,7 @@ class Level extends Phaser.State {
 
     constructor() {
         super();
+        let lives;
     }
 
     preload() {
@@ -18,7 +19,8 @@ class Level extends Phaser.State {
     }
 
     create() {
-        // this.input.onDown.add(this.endGame, this);
+        this.physics.arcade.checkCollision.down = false;
+        this.lives = 3;
 
         this.addPaddle();
         this.addBall();
@@ -54,7 +56,19 @@ class Level extends Phaser.State {
     addBall() {
         let ball = new Ball(this.game, 0, 0)
         this.ballGroup.add(ball)
+        ball.events.onOutOfBounds.add(this.ballLost, this);
     }
+
+    ballLost() {
+        this.lives -= 1;
+
+        if (this.lives == 0) {
+            this.endGame();
+        } else {
+            this.ballGroup.children[0].resetBall();
+        }
+    }
+
 }
 
 export default Level;
