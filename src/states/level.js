@@ -24,7 +24,7 @@ class Level extends Phaser.State {
     }
 
     update() {
-        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, this.ballHitPaddle, null, this);
+        this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, ballHitPaddle, null, this);
         this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitBrick, null, this);
     }
 
