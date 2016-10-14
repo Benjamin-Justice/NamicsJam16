@@ -36,6 +36,12 @@ class Preloader extends Phaser.State {
         this.game.load.image('paddle', 'assets/paddle.png');
         this.game.load.image('ball', 'assets/ball.png');
 
+        this.game.load.image('element_blue', 'assets/element_blue_square.png');
+        this.game.load.image('element_green', 'assets/element_green_square.png');
+        this.game.load.image('element_grey', 'assets/element_grey_square.png');
+        this.game.load.image('element_purple', 'assets/element_purple_square.png');
+        this.game.load.image('element_red', 'assets/element_red_square.png');
+
         this.game.load.audio('paddleSound', 'assets/sounds/zap1.ogg');
         this.game.load.audio('normalBrickSound', 'assets/sounds/tone1.ogg');
         this.game.load.audio('solidBrickSound', 'assets/sounds/pepSound4.ogg');

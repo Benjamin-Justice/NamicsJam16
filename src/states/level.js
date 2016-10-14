@@ -18,6 +18,9 @@ class Level extends Phaser.State {
     }
 
     initializeGame() {
+        let emitterGrey;
+        let emitterRed;
+        let emitterGreen;
         this.score = new Score();
         this.lives = new Lives(3);
         this.currentLevel = 0;
@@ -27,7 +30,6 @@ class Level extends Phaser.State {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
         this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
-
 
         this.game.add.existing(this.rootGroup);
         this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel]);
@@ -45,6 +47,21 @@ class Level extends Phaser.State {
 
         var next = this.input.keyboard.addKey(Phaser.Keyboard.G);
         next.onDown.add(this.nextLevel, this);
+
+        this.emitterGrey = this.game.add.emitter(0, 0, 100);
+        this.emitterGrey.makeParticles("element_grey");
+        this.emitterGrey.name = "emitter_grey";
+        this.emitterGrey.gravity = 0;
+
+        this.emitterRed = this.game.add.emitter(0, 0, 100);
+        this.emitterRed.makeParticles("element_red");
+        this.emitterRed.name = "emitter_red";
+        this.emitterRed.gravity = 0;
+
+        this.emitterGreen = this.game.add.emitter(0, 0, 100);
+        this.emitterGreen.makeParticles("element_green");
+        this.emitterGreen.name = "emitter_green";
+        this.emitterGreen.gravity = 0;
     }
 
     update() {
@@ -87,7 +104,15 @@ class Level extends Phaser.State {
         brick.hit();
         if (brick.isDestroyed()) {
             brick.destroy();
-            this.score.add(brick.getPoints())
+
+            if (brick.brickType.getName() === "ballmultiplier") {
+                brick.particleBurst(this.emitterGreen);
+            } else if (brick.brickType.getName() === "multibrick")  {
+                brick.particleBurst(this.emitterGrey);
+            } else {
+                brick.particleBurst(this.emitterRed);
+            }
+            this.score.add(brick.getPoints());
             if (brick.isBallMultiplierBrick()) {
                 this.addBall();
             }
@@ -131,7 +156,6 @@ class Level extends Phaser.State {
     togglePause() {
         this.physics.arcade.isPaused = (this.physics.arcade.isPaused) ? false : true;
     }
-
 }
 
 export default Level;
