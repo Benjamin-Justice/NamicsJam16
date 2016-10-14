@@ -52,7 +52,10 @@ class Level extends Phaser.State {
     }
 
     destroyBrick(brick) {
-        brick.destroy();
+        brick.hit();
+        if (brick.isDestroyed()) {
+            brick.destroy();
+        }
         console.log(this.bricksGroup.children.length );
         if (this.bricksGroup.children.length == 0){
             this.endGame();
