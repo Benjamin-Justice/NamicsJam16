@@ -31,6 +31,10 @@ class Constants {
     static get BRICK_GREEN() {
         return 7;
     }
+
+    static get MAPS() {
+        return ['irgendwas', 'lab', 'rob', 'snake'];
+    }
 }
 
 export default Constants;
