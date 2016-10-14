@@ -47,7 +47,7 @@ class Level extends Phaser.State {
 
     endGame() {
         this.initializeGame();
-        this.game.state.start('gameover', false, false);
+        this.game.state.start('gameover');
     }
 
     addBasicGroups() {
