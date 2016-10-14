@@ -8,8 +8,6 @@ class Brick extends Phaser.Sprite {
     constructor(game, x, y, brickType) {
         super(game, x, y, "bricksspritesheet");
         this.brickType = brickType;
-        this.frame = this.brickType.getFrame();
-        this.hitCnt = 0;
         this.initPhysics();
     }
 
@@ -22,7 +20,6 @@ class Brick extends Phaser.Sprite {
 
     hit() {
         this.brickType.hit();
-        this.frame = this.brickType.getFrame();
     }
 
     isDestroyed() {
@@ -38,7 +35,7 @@ class Brick extends Phaser.Sprite {
     }
 
     update() {
-
+        this.frame = this.brickType.getFrame();
     }
 }
 
