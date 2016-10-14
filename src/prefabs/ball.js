@@ -2,9 +2,10 @@ class Ball extends Phaser.Sprite {
 
     constructor(game, x, y, key, frame) {
         super(game, x, y, "ball", frame);
+        this.origWidth = this.scale.x;
+        this.origHeight = this.scale.y;
 
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
-
 
         this.anchor.set(0.5);
         this.checkWorldBounds = true;
@@ -20,7 +21,6 @@ class Ball extends Phaser.Sprite {
     initInput() {
         this.inputEnabled = true;
         this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
-        this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
     }
 
     update() {
@@ -29,16 +29,18 @@ class Ball extends Phaser.Sprite {
 
     updateInput() {
         if (this.upKey.isDown) {
-            if (this.width < 100 ) {
-              this.width = this.width + 5;
-              this.height = this.width + 5;
+            if (this.scale.x < 4 ) {
+              this.scale.x = this.scale.x + 0.2;
+              this.scale.y = this.scale.y + 0.2;
             }
         }
-        else if (this.downKey.isDown) {
-            if (this.width > 30 ){
-              this.width = this.width - 5;
-              this.height = this.width + 5;
+        else if (this.upKey.isUp) {
+          for (let i = 0; i < 10; i++) {
+            if (this.scale.x > this.origWidth ) {
+              this.scale.x = this.scale.x - 0.01;
+              this.scale.y = this.scale.y - 0.01;
             }
+          }
         }
         else {
             //
