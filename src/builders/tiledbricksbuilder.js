@@ -3,7 +3,7 @@ import Brick from '../prefabs/brick';
 
 const BRICK_VALUE_RED = 1;
 const BRICK_VALUE_YELLOW = 3;
-const BRICK_VALUE_WHITE = 6;
+const BRICK_VALUE_WHITE = 7;
 
 class TiledBricksBuilder {
     constructor(fileName, game, bricksGroup) {
