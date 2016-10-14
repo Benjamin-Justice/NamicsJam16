@@ -9,6 +9,9 @@ class Brick extends Phaser.Sprite {
         super(game, x, y, "bricksspritesheet");
         this.brickType = brickType;
         this.initPhysics();
+        this.initSound();
+        let sound;
+
     }
 
     initPhysics() {
@@ -18,8 +21,13 @@ class Brick extends Phaser.Sprite {
         this.body.immovable = true;
     }
 
+    initSound() {
+      this.sound = this.game.add.audio(this.brickType.sound);
+    }
+
     hit() {
         this.brickType.hit();
+        this.sound.play();
     }
 
     isDestroyed() {

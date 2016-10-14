@@ -4,6 +4,7 @@ import NormalBrick from './normalbrick';
 class SolidBrick extends NormalBrick {
     constructor() {
         super();
+        this.sound = 'solidBrickSound';
     }
 
     isDestroyed() {

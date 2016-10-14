@@ -6,6 +6,7 @@ class MultiBrick extends NormalBrick {
         super();
         this.frame = Constants.BRICK_WHITE;
         this.hits = 0;
+        this.sound = 'multyBrickSound';
     }
 
     hit() {

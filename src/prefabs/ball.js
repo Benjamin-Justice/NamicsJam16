@@ -1,7 +1,7 @@
 class Ball extends Phaser.Sprite {
 
-    constructor(game, x, y, key, frame) {
-        super(game, x, y, "ball", frame);
+    constructor(game, x, y) {
+        super(game, x, y, "ball");
         this.origWidth = this.scale.x;
         this.origHeight = this.scale.y;
 
@@ -16,12 +16,20 @@ class Ball extends Phaser.Sprite {
         this.body.bounce.set(1);
         this.setVelocity();
         this.initInput();
+        this.initSound();
+
+        let ballLostSound;
+
     }
 
     initInput() {
         this.inputEnabled = true;
         this.ballSizeKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
         this.pad1 = this.game.input.gamepad.pad1;
+    }
+
+    initSound() {
+        this.ballLostSound = this.game.add.audio('ballLostSound');
     }
 
     update() {
@@ -62,5 +70,10 @@ class Ball extends Phaser.Sprite {
         this.body.velocity.x = -75;
     }
 
+    duplicateBall() {
+        var newBall = new Ball(this.game, this.x, this.y);
+        newBall.body.velocity.x = -this.body.velocity.x;
+        return newBall;
+    }
 }
 export default Ball;

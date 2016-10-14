@@ -11,7 +11,6 @@ import ballHitPaddle from '../util/ballHitPaddle';
 
 class Level extends Phaser.State {
 
-
     constructor() {
         super();
         this.initializeGame();
@@ -26,12 +25,10 @@ class Level extends Phaser.State {
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
-        this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
 
-
+        this.bricksBuilder = this.getNextBricksBuilder();
         this.game.add.existing(this.rootGroup);
-        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel]);
+        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel] || 'random');
         this.pad1 = this.game.input.gamepad.pad1;
     }
 
@@ -40,7 +37,7 @@ class Level extends Phaser.State {
 
         this.bricksBuilder.addBricks();
         this.addPaddle();
-        this.addBall();
+        this.addNewBall();
 
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.togglePause, this);
@@ -64,16 +61,8 @@ class Level extends Phaser.State {
     }
 
     nextLevel() {
-        if (this.currentLevel < Constants.MAPS.length - 1) {
-            this.currentLevel++;
-            this.game.state.start('level');
-        } else {
-            this.winGame();
-        }
-    }
-
-    winGame() {
-        this.endGame();
+        this.currentLevel++;
+        this.game.state.start('level');
     }
 
     addBasicGroups() {
@@ -84,17 +73,25 @@ class Level extends Phaser.State {
         this.ballGroup = this.game.add.group(Constants.GROUP_ROOT, Constants.GROUP_BALL);
     }
 
-    ballHitBrick(ball, brick) {
-        this.destroyBrick(brick);
+    getNextBricksBuilder() {
+        if (this.currentLevel < Constants.MAPS.length) {
+            return new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
+        } else {
+            return new RandomBricksBuilder(this, this.bricksGroup);
+        }
     }
 
-    destroyBrick(brick) {
+    ballHitBrick(ball, brick) {
+        this.destroyBrick(brick, ball);
+    }
+
+    destroyBrick(brick, ball) {
         brick.hit();
         if (brick.isDestroyed()) {
             brick.destroy();
             this.score.add(brick.getPoints())
             if (brick.isBallMultiplierBrick()) {
-                this.addBall();
+                this.addBall(ball.duplicateBall());
             }
         }
         console.log(this.bricksGroup.children.length);
@@ -112,14 +109,19 @@ class Level extends Phaser.State {
         this.playerGroup.add(paddle);
     }
 
-    addBall() {
+    addNewBall() {
         let ball = new Ball(this.game, 0, 0);
         ball.resetBall();
+        this.addBall(ball);
+    }
+
+    addBall(ball) {
         this.ballGroup.add(ball);
         ball.events.onOutOfBounds.add(this.ballLost, this, 0, ball);
     }
 
     ballLost(ball) {
+        ball.ballLostSound.play();
         if (this.ballGroup.children.length > 1) {
             ball.destroy();
         } else {
