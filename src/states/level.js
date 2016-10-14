@@ -6,6 +6,7 @@ import Paddle from '../prefabs/paddle';
 import Ball from '../prefabs/ball';
 import Score from '../util/score';
 import Lives from '../util/lives';
+import UI from '../util/ui';
 import ballHitPaddle from '../util/ballHitPaddle';
 
 class Level extends Phaser.State {
@@ -25,11 +26,11 @@ class Level extends Phaser.State {
     preload() {
         Utils.loadRandomBackground(this.game);
         this.addBasicGroups();
-        //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
         this.bricksBuilder = new TiledBricksBuilder(Constants.MAPS[this.currentLevel], this, this.bricksGroup);
 
 
         this.game.add.existing(this.rootGroup);
+        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives, Constants.MAPS[this.currentLevel]);
     }
 
     create() {
@@ -49,6 +50,7 @@ class Level extends Phaser.State {
     update() {
         this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, ballHitPaddle, null, this);
         this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitBrick, null, this);
+        this.ui.update();
     }
 
     endGame() {
@@ -57,7 +59,7 @@ class Level extends Phaser.State {
     }
 
     nextLevel() {
-        if (this.currentLevel < Constants.MAPS.length-1) {
+        if (this.currentLevel < Constants.MAPS.length - 1) {
             this.currentLevel++;
             this.game.state.start('level');
         } else {
@@ -86,9 +88,12 @@ class Level extends Phaser.State {
         if (brick.isDestroyed()) {
             brick.destroy();
             this.score.add(brick.getPoints())
+            if (brick.isBallMultiplierBrick()) {
+                this.addBall();
+            }
         }
-        console.log(this.bricksGroup.children.length );
-        if (this.bricksGroup.children.length == 0){
+        console.log(this.bricksGroup.children.length);
+        if (this.bricksGroup.children.length == 0) {
             this.nextLevel();
         }
     }
@@ -106,17 +111,20 @@ class Level extends Phaser.State {
         let ball = new Ball(this.game, 0, 0);
         ball.resetBall();
         this.ballGroup.add(ball);
-        ball.events.onOutOfBounds.add(this.ballLost, this);
+        ball.events.onOutOfBounds.add(this.ballLost, this, 0, ball);
     }
 
-    ballLost() {
-        this.lives.decrement();
-        console.log(this.lives);
-        if (this.lives.isEmpty()) {
-            this.endGame();
+    ballLost(ball) {
+        if (this.ballGroup.children.length > 1) {
+            ball.destroy();
         } else {
-            this.ballGroup.children[0].resetBall();
-            this.playerGroup.children[0].resetPaddle();
+            this.lives.decrement();
+            if (this.lives.isEmpty()) {
+                this.endGame();
+            } else {
+                this.ballGroup.children[0].resetBall();
+                this.playerGroup.children[0].resetPaddle();
+            }
         }
     }
 
