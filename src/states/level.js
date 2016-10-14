@@ -6,6 +6,7 @@ import Paddle from '../prefabs/paddle';
 import Ball from '../prefabs/ball';
 import Score from '../util/score';
 import Lives from '../util/lives';
+import UI from '../util/ui';
 import ballHitPaddle from '../util/ballHitPaddle';
 
 class Level extends Phaser.State {
@@ -27,6 +28,7 @@ class Level extends Phaser.State {
         //this.bricksBuilder = new RandomBricksBuilder(this, this.bricksGroup);
         this.bricksBuilder = new TiledBricksBuilder('snake', this, this.bricksGroup);
         this.game.add.existing(this.rootGroup);
+        this.ui = new UI(this.game, this.uiGroup, this.score, this.lives);
     }
 
     create() {
@@ -40,6 +42,7 @@ class Level extends Phaser.State {
     update() {
         this.game.physics.arcade.collide(this.ballGroup, this.playerGroup, ballHitPaddle, null, this);
         this.game.physics.arcade.collide(this.ballGroup, this.bricksGroup, this.ballHitBrick, null, this);
+        this.ui.update();
     }
 
     endGame() {
