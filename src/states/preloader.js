@@ -37,6 +37,9 @@ class Preloader extends Phaser.State {
         this.game.load.image('ball', 'assets/ball.png');
 
         this.game.load.audio('paddleSound', 'assets/sounds/zap1.ogg');
+        this.game.load.audio('normalBrickSound', 'assets/sounds/tone1.ogg');
+        this.game.load.audio('solidBrickSound', 'assets/sounds/lowDown.ogg');
+        this.game.load.audio('multyBrickSound', 'assets/sounds/zapThreeToneDown.ogg');
     }
 
     onLoadComplete() {

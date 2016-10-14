@@ -3,7 +3,9 @@ import Constants from '../util/constants';
 class NormalBrick {
     constructor() {
         this.isHit = false;
+        this.sound = 'normalBrickSound';
     }
+
 
     hit() {
         this.isHit = true;
