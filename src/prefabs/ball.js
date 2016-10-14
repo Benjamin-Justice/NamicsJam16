@@ -20,7 +20,7 @@ class Ball extends Phaser.Sprite {
 
     initInput() {
         this.inputEnabled = true;
-        this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        this.ballSizeKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
     }
 
     update() {
@@ -28,13 +28,13 @@ class Ball extends Phaser.Sprite {
     }
 
     updateInput() {
-        if (this.upKey.isDown) {
+        if (this.ballSizeKey.isDown) {
             if (this.scale.x < 4 ) {
               this.scale.x = this.scale.x + 0.2;
               this.scale.y = this.scale.y + 0.2;
             }
         }
-        else if (this.upKey.isUp) {
+        else if (this.ballSizeKey.isUp) {
           for (let i = 0; i < 10; i++) {
             if (this.scale.x > this.origWidth ) {
               this.scale.x = this.scale.x - 0.01;
