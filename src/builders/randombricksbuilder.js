@@ -1,17 +1,24 @@
 import Constants from '../util/constants';
 import Brick from '../prefabs/brick';
+import NormalBrick from '../prefabs/normalbrick';
+import SolidBrick from '../prefabs/solidbrick';
+import MultiBrick from '../prefabs/multibrick';
+import BallMultiplierBrick from '../prefabs/ballmultiplierbrick';
 
 class RandomBricksBuilder {
     constructor(game, bricksGroup) {
         this.game = game;
         this.bricksGroup = bricksGroup;
-        this.brickTypes = [Constants.BRICK_RED, Constants.BRICK_YELLOW, Constants.Brick_LILAC, Constants.BRICK_WHITE, Constants.BRICK_GREEN];
+        this.brickTypes = [new NormalBrick(), new NormalBrick(), new NormalBrick(), undefined, undefined, new SolidBrick(), new MultiBrick(), new BallMultiplierBrick()];
     }
 
     addBricks() {
         for (var y = 50; y < 250; y+=40) {
             for (var x = 100; x < 900; x += 70) {
-                this.bricksGroup.add(new Brick(this.game, x, y, this.randomBrickType()));
+                var brickType = this.randomBrickType();
+                if (brickType !== undefined) {
+                    this.bricksGroup.add(new Brick(this.game, x, y, brickType));
+                }
             }
         }
     }
