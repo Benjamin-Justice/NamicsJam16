@@ -9,6 +9,7 @@ function ballHitPaddle(ball, paddle) {
   }
 
   ball.body.velocity.x = posOnPaddle() * - 5
+  paddle.paddleSound.play()
 
 }
 

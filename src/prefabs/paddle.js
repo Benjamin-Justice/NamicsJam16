@@ -5,12 +5,18 @@ class Paddle extends Phaser.Sprite {
         let leftKey;
         let rightKey;
         let pad1;
+        let paddleSound;
 
         this.movespeed = 40;
 
         this.anchor.setTo(0.5, 0.5);
         this.initPhysics();
         this.initInput();
+        this.initSounds();
+    }
+
+    initSounds() {
+      this.paddleSound = this.game.add.audio('paddleSound');
     }
 
     initPhysics() {
